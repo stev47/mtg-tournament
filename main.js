@@ -55,39 +55,79 @@ function find_pairings (players, round) {
     var matches = [];
     var pairedPlayers = [];
 
+    var tries = [];
+    var byes = [];
+    var isPaired = [];
+    players.forEach(function () { isPaired.push(false) });
+
     // uneven amount of players -> deal one bye
     if (players.length % 2 == 1) {
         for (var i = players.length - 1; i >= 0; i--) {
             if (players[i].receivedBye) continue;
 
-            matches.push({
-                players: [players[i], null],
-            });
-            pairedPlayers.push(players[i]);
+            byes.push(i);
+            isPaired[i] = true;
             break;
         }
     }
 
-    for (var i = 0; i < players.length; i++) {
-        if (pairedPlayers.indexOf(players[i]) != -1) continue;
-        for (var j = i + 1; j < players.length; j++) {
-            if (pairedPlayers.indexOf(players[j]) != -1) continue;
-            if (players[i].opponents.indexOf(players[j]) != -1) continue;
-            if (players[j].opponents.indexOf(players[i]) != -1) continue; // remove
+    var i = 0;
+    var j = 1;
+    while (!isPaired.every(function (x) { return x == true })) {
+        console.log("Trying to pair " + i + " with " + j + ".");
+        if (j >= players.length) {
+            console.log("Current pairing impossible, redoing …");
+            if (tries.length == 0) {
+                var i = players.length - 1;
+                while (isPaired[i]) i--;
+                isPaired[i] = true;
+                byes.push(i);
+                console.log("Had to assign a bye for player ", i);
+                i = 0;
+                j = 1;
+                continue;
+            }
+            var tmp = tries.pop();
+            i = tmp[0];
+            j = tmp[1];
+            isPaired[i] = false;
+            isPaired[j] = false;
+            j++;
+            continue;
+        };
+        // already paired?
+        if (isPaired[i]) { i++; j = i + 1; continue; }
+        if (isPaired[j]) { j++; continue; }
+        // previously paired?
+        if (players[i].opponents.indexOf(players[j]) != -1) { j++; continue; }
 
-            matches.push({
-                players: [players[i], players[j]],
-            });
-            pairedPlayers.push(players[i], players[j]);
-            break;
-        }
+        tries.push([i, j]);
+        isPaired[i] = true;
+        isPaired[j] = true;
+        console.log("Paired " + i + " with " + j + ".");
+
+        i++;
+        j = i + 1;
     }
-
-    matches.forEach(function (match, idx) {
-        match.round = round;
-        match.seat = idx + 1;
-        match.proposed = true;
-        match.result = [0, 0, 0];
+    var matches1 = tries.map(function (match, idx) {
+        return {
+            players: [players[match[0]], players[match[1]]],
+        }
+    });
+    var matches2 = byes.map(function (player, idx) {
+        return {
+            players: [players[player], null],
+        }
+    });
+    matches2.reverse();
+    var matches = [].concat(matches1, matches2).map(function (match, idx) {
+        return {
+            players: match.players,
+            round: round,
+            seat: idx + 1,
+            proposed: true,
+            result: [0, 0, 0],
+        }
     });
 
     return matches;

@@ -44,7 +44,8 @@ function show_matches (matches) {
     });
 }
 
-function update_view () {
+function update_view (e) {
+    if (e) e.preventDefault();
     var maxRound = (matches.length == 0)? 0 : matches
         .map(function (match) { return match.round })
         .reduce(function (r1, r2) { return Math.max(r1, r2) });
@@ -98,6 +99,16 @@ $(function () {
     });
 
     $('#numRound').on('change', update_view);
+    $('#roundPrev').on('click', function () {
+        var round = parseInt($('#numRound').val());
+        $('#numRound').val(round - 1);
+        update_view();
+    });
+    $('#roundNext').on('click', function () {
+        var round = parseInt($('#numRound').val());
+        $('#numRound').val(round + 1);
+        update_view();
+    });
     update_view();
 
 });

@@ -2,7 +2,6 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="knacss.css">
         <link rel="stylesheet" href="style.css">
         <title>Magic - Tournament Management</title>
         <script src="jquery.js"></script>
@@ -11,48 +10,50 @@
     </head>
     <body>
         <h1>Magic - Tournament Management</h1>
-        <div class="grid">
-            <div class="grid2">
-                <div id="secPlayers">
-                    <h2>Players</h2>
-                    <table id="tabPlayers">
-                        <thead>
-                            <tr>
-                                <th>Rank</th>
-                                <th>Name</th>
-                                <th>Match Points</th>
-                                <th>Opponents Match-Win-Rate</th>
-                                <th>Game Points</th>
-                                <th>Opponents Game-Win-Rate</th>
-                            </tr>
-                        </thead>
-                    </table>
-                    <form id="frmPlayer">
-                        <input type="text" id="txtPlayer">
-                        <input type="submit" value="Add">
-                    </form>
-                </div>
-                <div id="secMatches">
-                    <h2>
-                        Matches, Round
-                        <input type="number" id="numRound" min="1" step="1" value="1">
-                    </h2>
-                    <form id="frmMatches">
-                        <table id="tabMatches">
-                            <thead>
-                                <tr>
-                                    <th>Seat</th>
-                                    <th>Player</th>
-                                    <th>← wins</th>
-                                    <th>draws</th>
-                                    <th>wins →</th>
-                                    <th>Player</th>
-                                </tr>
-                            </thead>
-                        </table>
-                        <input type="submit" value="Save">
-                    </form>
-                </div>
+        <section id="secPlayers">
+            <h2>
+                Players, Add:
+                <form id="frmPlayer">
+                    <input type="text" id="txtPlayer">
+                    <input type="submit" value="add">
+                </form>
+            </h2>
+            <table id="tabPlayers">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th class="name">Name</th>
+                        <th class="score"><abbr title="Match Points">MP</abbr></th>
+                        <th class="score"><abbr title="Opponents Match-Win-Rate">OMWR</abbr></th>
+                        <th class="score"><abbr title="Game Points">GP</abbr></th>
+                        <th class="score"><abbr title="Opponents Game-Win-Rate">OGWR</abbr></th>
+                    </tr>
+                </thead>
+            </table>
+        </section>
+        <section id="secMatches">
+            <h2>
+                Matches, Round:
+                <button id="roundPrev">«</button>
+                <input type="number" id="numRound" min="1" step="1" value="1">
+                <button id="roundNext">»</button>
+            </h2>
+            <form id="frmMatches">
+                <table id="tabMatches">
+                    <thead>
+                        <tr>
+                            <th>Seat</th>
+                            <th class="name">Player</th>
+                            <th class="score">← wins</th>
+                            <th class="score">draws</th>
+                            <th class="score">wins →</th>
+                            <th class="name">Player</th>
+                        </tr>
+                    </thead>
+                </table>
+                <input type="submit" value="save">
+            </form>
+        </section>
         </div>
     </body>
 </html>
