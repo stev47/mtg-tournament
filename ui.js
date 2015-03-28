@@ -17,7 +17,7 @@ function show_matches (matches) {
     $('#tabMatches tbody').remove();
     $('#tabMatches').append($('<tbody>'));
     matches.forEach(function (match, idx) {
-        $('#tabMatches tbody').append($('<tr>')
+        var tr = $('<tr>')
             .append($('<td>').text(match.seat))
             .append($('<td>').text(match.players[0].name))
             .append($('<td>').append($('<input>').attr({
@@ -36,7 +36,11 @@ function show_matches (matches) {
                 value: match.result[2],
             })))
             .append($('<td>').text((match.players[1] != null)? match.players[1].name : '» bye «' ))
-        );
+        if (match.players[1] == null) {
+            $('#result_0_' + idx, tr).val(2);
+            $('td input', tr).prop('disabled', true);
+        }
+        $('#tabMatches tbody').append(tr);
     });
 }
 

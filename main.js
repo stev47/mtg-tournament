@@ -72,6 +72,8 @@ function find_pairings (players, round) {
         if (pairedPlayers.indexOf(players[i]) != -1) continue;
         for (var j = i + 1; j < players.length; j++) {
             if (pairedPlayers.indexOf(players[j]) != -1) continue;
+            if (players[i].opponents.indexOf(players[j]) != -1) continue;
+            if (players[j].opponents.indexOf(players[i]) != -1) continue; // remove
 
             matches.push({
                 players: [players[i], players[j]],
@@ -146,8 +148,13 @@ function update_scores (players, matches) {
             player.opponentsGameWinPercentage += opponent.gameWinPercentage;
         });
 
-        player.opponentsMatchWinPercentage /= player.opponents.length;
-        player.opponentsGameWinPercentage /= player.opponents.length;
+        if (player.opponents.length != 0) {
+            player.opponentsMatchWinPercentage /= player.opponents.length;
+            player.opponentsGameWinPercentage /= player.opponents.length;
+        } else {
+            player.opponentsMatchWinPercentage = 0;
+            player.opponentsGameWinPercentage = 0;
+        }
 
         player.score = [
             player.matchPoints,

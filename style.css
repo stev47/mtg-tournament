@@ -1,0 +1,20 @@
+html {
+    font-size: 0.8vw;
+}
+
+body {
+    padding: 0.5em;
+}
+
+td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+input[type=number] {
+    width: 5vw;
+}
+
+div.grid > div {
+    padding-bottom: 1vw;
+}
