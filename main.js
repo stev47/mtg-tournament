@@ -49,7 +49,7 @@ function init_players (players) {
         player.opponentsGameWinPercentage = null;
         player.receivedBye = false;
     });
-    shuffle(players);
+    //shuffle(players);
 }
 function find_pairings (players, round) {
     var matches = [];
