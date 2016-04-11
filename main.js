@@ -37,7 +37,7 @@ function sort_players (players) {
 }
 function init_players (players) {
     players.forEach(function (player) {
-        player.score = [0, 0, 0, 0];
+        player.score = [0, 0.33, 0, 0.33];
         player.matches = 0;
         player.games = 0;
         player.matchPoints = 0;
@@ -144,7 +144,7 @@ function update_scores (players, matches) {
             p0.matches += 1;
             p0.games += 2;
             p0.matchPoints += 3;
-            p0.gamePoints += 6;
+            p0.gamePoints += 0;
             p0.receivedBye = true;
 
             return;
@@ -176,8 +176,16 @@ function update_scores (players, matches) {
         }
     });
     players.forEach(function (player) {
-        player.matchWinPercentage = Math.max(0.33, player.matchPoints / (player.matches * 3));
-        player.gameWinPercentage = Math.max(0.33, player.gamePoints / (player.games * 3));
+        if (player.matches > 0) {
+            player.matchWinPercentage = Math.max(0.33, player.matchPoints / (player.matches * 3));
+        } else {
+            player.matchWinPercentage = 0.33;
+        }
+        if (player.games > 0) {
+            player.gameWinPercentage = Math.max(0.33, player.gamePoints / (player.games * 3));
+        } else {
+            player.gameWinPercentage = 0.33;
+        }
     });
     players.forEach(function (player) {
         player.opponentsMatchWinPercentage = 0;
@@ -192,8 +200,8 @@ function update_scores (players, matches) {
             player.opponentsMatchWinPercentage /= player.opponents.length;
             player.opponentsGameWinPercentage /= player.opponents.length;
         } else {
-            player.opponentsMatchWinPercentage = 0;
-            player.opponentsGameWinPercentage = 0;
+            player.opponentsMatchWinPercentage = 0.33;
+            player.opponentsGameWinPercentage = 0.33;
         }
 
         player.score = [

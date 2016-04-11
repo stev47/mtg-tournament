@@ -1,10 +1,43 @@
-html {
-}
-
 * {
     box-sizing: border-box;
 }
+body {
+    background: #fefefe;
+    font-size: 0.9rem;
+}
 
+/* forms */
+
+input, button {
+    padding: 0.2em 0.4em;
+    border: 1px solid #ccc;
+    border-radius: 0.2rem;
+}
+input:focus, button:focus {
+    border: 1px solid #99f;
+}
+
+/* table */
+table {
+    border: 1px solid #cbcbcb;
+}
+td, th {
+    white-space: nowrap;
+    padding: 0.3em 0.7em;
+    border-right: 1px solid #cbcbcb;
+}
+th {
+    background: #ddd;
+    border-bottom: 1px solid #cbcbcb;
+    font-size: 0.9em;
+}
+
+
+#container {
+    width: 100%;
+    max-width: 80rem;
+    margin: auto;
+}
 section {
     display: block;
     float: left;
@@ -46,10 +79,10 @@ td input {
     width: 100%;
 }
 
-#tabMatches {
+table {
     margin-bottom: 0.5em;
 }
-#tabMatches + input {
+#tabPlayers + button, #tabMatches + input {
     width: 100%;
 }
 #tabMatches td:nth-child(2) {

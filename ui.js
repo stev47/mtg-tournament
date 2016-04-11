@@ -5,10 +5,10 @@ function show_players (players) {
         $('#tabPlayers tbody').append($('<tr>')
             .append($('<td>').text(idx + 1))
             .append($('<td>').text(player.name))
-            .append($('<td>').text(player.score[0]))
-            .append($('<td>').text(player.score[1]))
-            .append($('<td>').text(player.score[2]))
-            .append($('<td>').text(player.score[3]))
+            .append($('<td>').text(player.score[0].toFixed(0)))
+            .append($('<td>').text(player.score[1].toFixed(2)))
+            .append($('<td>').text(player.score[2].toFixed(0)))
+            .append($('<td>').text(player.score[3].toFixed(2)))
         );
     });
 }
@@ -73,6 +73,10 @@ $(function () {
         update_view();
         return false;
     });
+    $('#frmMatches').on('keydown', function (e) {
+        if (e.which == 13) return false;
+            //e.preventDefault();
+    });
     $('#frmMatches').on('submit', function (e) {
         e.preventDefault();
 
@@ -98,6 +102,10 @@ $(function () {
         return false;
     });
 
+    $('#shufflePlayers').on('click', function () {
+        shuffle(players)
+        update_view();
+    });
     $('#numRound').on('change', update_view);
     $('#roundPrev').on('click', function () {
         var round = parseInt($('#numRound').val());
