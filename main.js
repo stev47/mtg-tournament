@@ -226,4 +226,8 @@ function update_scores (players, matches) {
 //console.log(players);
 //console.log(find_pairings(players));
 //
-
+//
+window.addEventListener("beforeunload", function (e) {
+    e.preventDefault();
+    e.returnValue = '';
+});
